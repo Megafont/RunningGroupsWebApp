@@ -27,5 +27,22 @@ namespace RunGroupWebApp.Controllers
             ClubModel club = await _ClubsRepository.GetByIdAsync(id);
             return View(club);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(ClubModel club)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(club);
+            }
+
+            _ClubsRepository.Add(club);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
