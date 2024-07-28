@@ -27,5 +27,22 @@ namespace RunGroupWebApp.Controllers
             RaceModel race = await _RacesRepository.GetByIdAsync(id);
             return View(race);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(RaceModel race)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(race);
+            }
+
+            _RacesRepository.Add(race);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
