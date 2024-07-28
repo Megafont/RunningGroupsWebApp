@@ -1,7 +1,7 @@
 ﻿@using RunGroupWebApp.Data.Enums
 @using RunningGroupsWebApp.ViewModels
 
-@model CreateRaceViewModel
+@model EditClubViewModel
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -9,7 +9,8 @@
 }
 
 <!-- We added "enctype="multipart/form-data" here in video #10. It is necessary when you add the ability to upload images.-->
-<form method="post" asp-action="Create" enctype="multipart/form-data">
+<form method="post" asp-action="Edit" enctype="multipart/form-data">
+    <input type="hidden" value="AddressId" id="AddressId"/>
     <div class="form-group">
         <label asp-for="Title">Title</label>
         <input asp-for="Title" class="form-control" placeholder="Enter title">
@@ -21,11 +22,11 @@
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="RaceCategory">Club Category</label>
-        <select asp-for="RaceCategory" asp-items="@Html.GetEnumSelectList<RaceCategories>()" class="form-control">
+        <label asp-for="ClubCategory">Club Category</label>
+        <select asp-for="ClubCategory" asp-items="@Html.GetEnumSelectList<ClubCategories>()" class="form-control">
             <option>--Select club category--</option>
         </select>
-        <span asp-validation-for="RaceCategory" class="text-danger"></span>
+        <span asp-validation-for="ClubCategory" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Address.Street">Street</label>
@@ -50,3 +51,4 @@
 
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+

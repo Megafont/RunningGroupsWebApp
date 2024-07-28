@@ -38,6 +38,13 @@ namespace RunGroupWebApp.Repositories
             return await _DbContext.Clubs.Include(i => i.Address).FirstOrDefaultAsync(i => i.Id == id);
         }
 
+        public async Task<ClubModel> GetByIdAsyncNoTracking(int id)
+        {
+            // The Include() call tells it to also get the address data when it fetches the requested club from the database table.
+            // This is because the Address is in another table, and it will not look it up if you don't use Include().
+            return await _DbContext.Clubs.Include(i => i.Address).AsNoTracking().FirstOrDefaultAsync(i => i.Id == id);
+        }
+
         public async Task<IEnumerable<ClubModel>> GetAllByCityAsync(string city)
         {
             return await _DbContext.Clubs.Where(c => c.Address.City.Contains(city)).ToListAsync();

@@ -69,5 +69,74 @@ namespace RunGroupWebApp.Controllers
             return View(raceVM);
         }
 
+        public async Task<IActionResult> Edit(int id)
+        {
+            var race = await _RacesRepository.GetByIdAsync(id);
+            if (race == null) return View("Error");
+            var raceVM = new EditRaceViewModel
+            {
+                Title = race.Title,
+                Description = race.Description,
+                AddressId = race.AddressId,
+                Address = race.Address,
+                RaceCategory = race.RaceCategory,
+                URL = race.Image
+            };
+
+            return View(raceVM);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, EditRaceViewModel raceVM)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Failed to edit race!");
+                return View("Edit", raceVM);
+            }
+
+            var userRace = await _RacesRepository.GetByIdAsyncNoTracking(id);
+
+            if (userRace != null)
+            {
+                try
+                {
+                    var fi = new FileInfo(userRace.Image);
+                    var publicId = Path.GetFileNameWithoutExtension(fi.Name);
+                    await _PhotoService.DeletePhotoAsync(publicId);
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "Could not delete photo!");
+                    return View(raceVM);
+                }
+
+
+                var photoResult = await _PhotoService.AddPhotoAsync(raceVM.Image);
+                var race = new RaceModel()
+                {
+                    Id = id,
+                    Title = raceVM.Title,
+                    Description = raceVM.Description,
+                    AddressId = userRace.AddressId,
+                    Address = new AddressModel
+                    {
+                        Id = userRace.AddressId,
+                        Street = raceVM.Address.Street,
+                        City = raceVM.Address.City,
+                        State = raceVM.Address.State
+                    },
+                    RaceCategory = raceVM.RaceCategory,
+                    Image = photoResult.Url.ToString(),
+                };
+
+                _RacesRepository.Update(race);
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return View(raceVM);
+            }
+        }
     }
 }

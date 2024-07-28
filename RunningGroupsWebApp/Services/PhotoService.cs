@@ -41,7 +41,7 @@ namespace RunningGroupsWebApp.Services
             return uploadResult;
         }
 
-        public async Task<DeletionResult> DeletionPhotoAsync(string publicId)
+        public async Task<DeletionResult> DeletePhotoAsync(string publicId)
         {
             var deleteParams = new DeletionParams(publicId);
             var result = await _Cloudinary.DestroyAsync(deleteParams);

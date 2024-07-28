@@ -1,7 +1,7 @@
 ﻿@using RunGroupWebApp.Data.Enums
 @using RunningGroupsWebApp.ViewModels
 
-@model CreateRaceViewModel
+@model EditRaceViewModel
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -9,7 +9,8 @@
 }
 
 <!-- We added "enctype="multipart/form-data" here in video #10. It is necessary when you add the ability to upload images.-->
-<form method="post" asp-action="Create" enctype="multipart/form-data">
+<form method="post" asp-action="Edit" enctype="multipart/form-data">
+    <input type="hidden" value="AddressId" id="AddressId"/>
     <div class="form-group">
         <label asp-for="Title">Title</label>
         <input asp-for="Title" class="form-control" placeholder="Enter title">
@@ -50,3 +51,4 @@
 
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
