@@ -3,16 +3,20 @@ using Microsoft.EntityFrameworkCore;
 using RunGroupWebApp.Data;
 using RunGroupWebApp.Interfaces;
 using RunGroupWebApp.Models;
+using RunningGroupsWebApp.Interfaces;
+using RunningGroupsWebApp.ViewModels;
 
 namespace RunGroupWebApp.Controllers
 {
     public class ClubsController : Controller
     {
         private readonly IClubsRepository _ClubsRepository;
+        private readonly IPhotoService _PhotoService;
 
-        public ClubsController(IClubsRepository clubsRepository)
+        public ClubsController(IClubsRepository clubsRepository, IPhotoService photoService)
         {
             _ClubsRepository = clubsRepository;
+            _PhotoService = photoService;
         }
 
         public async Task<IActionResult> Index()
@@ -34,15 +38,34 @@ namespace RunGroupWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ClubModel club)
+        public async Task<IActionResult> Create(CreateClubViewModel clubVM)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View(club);
+                var result = await _PhotoService.AddPhotoAsync(clubVM.Image);
+
+                var club = new ClubModel
+                {
+                    Title = clubVM.Title,
+                    Description = clubVM.Description,
+                    Image = result.Url.ToString(),
+                    Address = new AddressModel 
+                    { 
+                        Street = clubVM.Address.Street,
+                        City = clubVM.Address.City,
+                        State = clubVM.Address.State
+                    },
+                };
+                                    
+                _ClubsRepository.Add(club);
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                ModelState.AddModelError("", "Photo upload failed!");
             }
 
-            _ClubsRepository.Add(club);
-            return RedirectToAction(nameof(Index));
+            return View(clubVM);
         }
     }
 }

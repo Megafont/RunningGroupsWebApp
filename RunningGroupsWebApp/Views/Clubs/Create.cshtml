@@ -1,14 +1,15 @@
 ﻿@using RunGroupWebApp.Data.Enums
+@using RunningGroupsWebApp.ViewModels
 
-@model ClubModel
-
+@model CreateClubViewModel
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
 
-<form method="post" asp-action="Create">
+<!-- We added "enctype="multipart/form-data" here in video #10. It is necessary when you add the ability to upload images.-->
+<form method="post" asp-action="Create" enctype="multipart/form-data">
     <div class="form-group">
         <label asp-for="Title">Title</label>
         <input asp-for="Title" class="form-control" placeholder="Enter title">
@@ -18,12 +19,7 @@
         <label asp-for="Description">Description</label>
         <input asp-for="Description" class="form-control" placeholder="Enter description">
         <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Image">Image</label>
-        <input asp-for="Image" class="form-control" placeholder="Add image">
-        <span asp-validation-for="Image" class="text-danger"></span>
-    </div>    
+    </div> 
     <div class="form-group">
         <label asp-for="ClubCategory">Club Category</label>
         <select asp-for="ClubCategory" asp-items="@Html.GetEnumSelectList<ClubCategories>()" class="form-control">
@@ -45,6 +41,11 @@
         <label asp-for="Address.State">Street</label>
         <input asp-for="Address.State" class="form-control" placeholder="Enter state">
         <span asp-validation-for="Address.State" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Image">Image</label>
+        <input asp-for="Image" type="file" class="form-control" placeholder="Add image">
+        <span asp-validation-for="Image" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>

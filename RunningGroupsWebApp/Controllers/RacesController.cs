@@ -3,16 +3,21 @@ using Microsoft.EntityFrameworkCore;
 using RunGroupWebApp.Data;
 using RunGroupWebApp.Interfaces;
 using RunGroupWebApp.Models;
+using RunGroupWebApp.Repositories;
+using RunningGroupsWebApp.Interfaces;
+using RunningGroupsWebApp.ViewModels;
 
 namespace RunGroupWebApp.Controllers
 {
     public class RacesController : Controller
     {
         private readonly IRacesRepository _RacesRepository;
+        private readonly IPhotoService _PhotoService;
 
-        public RacesController(IRacesRepository racesRepository)
+        public RacesController(IRacesRepository racesRepository, IPhotoService photoService)
         {
             _RacesRepository = racesRepository;
+            _PhotoService = photoService;
         }
 
         public async Task<IActionResult> Index()
@@ -34,15 +39,35 @@ namespace RunGroupWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(RaceModel race)
+        public async Task<IActionResult> Create(CreateRaceViewModel raceVM)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View(race);
+                var result = await _PhotoService.AddPhotoAsync(raceVM.Image);
+
+                var race = new RaceModel
+                {
+                    Title = raceVM.Title,
+                    Description = raceVM.Description,
+                    Image = result.Url.ToString(),
+                    Address = new AddressModel
+                    {
+                        Street = raceVM.Address.Street,
+                        City = raceVM.Address.City,
+                        State = raceVM.Address.State
+                    },
+                };
+
+                _RacesRepository.Add(race);
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                ModelState.AddModelError("", "Photo upload failed!");
             }
 
-            _RacesRepository.Add(race);
-            return RedirectToAction(nameof(Index));
+            return View(raceVM);
         }
+
     }
 }
