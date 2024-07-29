@@ -16,6 +16,7 @@
                                 <div class="btn-group">
                                     <a type="button" asp-controller="Races" asp-action="Detail" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">View</a>
                                     <a type="button" asp-controller="Races" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                    <a type="button" asp-controller="Races" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Delete</a>
                                 </div>
                                 <small class="text-muted">@item.RaceCategory</small>
                             </div>

@@ -137,5 +137,37 @@ namespace RunGroupWebApp.Controllers
                 return View(clubVM);
             }
         }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var clubDetails = await _ClubsRepository.GetByIdAsync(id);
+            if (clubDetails == null) return View("Error");
+            return View(clubDetails);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteClub(int id)
+        {
+            var clubDetails = await _ClubsRepository.GetByIdAsync(id);
+            if (clubDetails == null) return View("Error");
+
+            // Delete the photo
+            try
+            {
+                var fi = new FileInfo(clubDetails.Image);
+                var publicId = Path.GetFileNameWithoutExtension(fi.Name);
+                await _PhotoService.DeletePhotoAsync(publicId);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Could not delete photo!");
+                return View(clubDetails);
+            }
+
+            // Delete the club
+            _ClubsRepository.Delete(clubDetails);
+            return RedirectToAction(nameof(Index));
+        }
+      
     }
 }
