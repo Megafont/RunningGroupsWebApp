@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using RunGroupWebApp.Data;
 using RunGroupWebApp.Models;
+using RunningGroupsWebApp.Data;
 using RunningGroupsWebApp.ViewModels;
 
 namespace RunningGroupsWebApp.Controllers
@@ -58,7 +59,46 @@ namespace RunningGroupsWebApp.Controllers
             // The user was not found.
             TempData["Error"] = "Wrong credentials. Please try again.";
             return View(loginViewModel);
+        }
 
+        public IActionResult Register()
+        {
+            var response = new RegisterViewModel();
+            return View(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
+        {
+            if (!ModelState.IsValid)
+                return View(registerViewModel);
+
+            var user = await _UserManager.FindByEmailAsync(registerViewModel.EmailAddress);
+            if (user != null)
+            {
+                TempData["Error"] = "This email address is already in use.";
+                return View(registerViewModel);
+            }
+
+            var newUser = new AppUser()
+            {
+                Email = registerViewModel.EmailAddress,
+                UserName = registerViewModel.EmailAddress
+            };
+
+            var newUserResponse = await _UserManager.CreateAsync(newUser, registerViewModel.Password);
+
+            if (newUserResponse.Succeeded)
+                await _UserManager.AddToRoleAsync(newUser, UserRoles.User);
+
+            return RedirectToAction("Index", "Races");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _SignInManager.SignOutAsync();
+            return RedirectToAction("Index", "Races");
         }
     }
 }
