@@ -13,11 +13,13 @@ namespace RunningGroupsWebApp.Controllers
     {
         private readonly IRacesRepository _RacesRepository;
         private readonly IPhotoService _PhotoService;
+        private readonly IHttpContextAccessor _HttpContextAccessor;
 
-        public RacesController(IRacesRepository racesRepository, IPhotoService photoService)
+        public RacesController(IRacesRepository racesRepository, IPhotoService photoService, IHttpContextAccessor httpContextAccessor)
         {
             _RacesRepository = racesRepository;
             _PhotoService = photoService;
+            _HttpContextAccessor = httpContextAccessor;
         }
 
         public async Task<IActionResult> Index()
@@ -35,7 +37,11 @@ namespace RunningGroupsWebApp.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            var curUserId = _HttpContextAccessor.HttpContext.User.GetUserId(); // GetUserId() is an extension method we made in ClaimPrincipalExtensions.cs.
+
+            var createRaceViewModel = new CreateRaceViewModel { AppUserId = curUserId };
+
+            return View(createRaceViewModel);
         }
 
         [HttpPost]
@@ -50,6 +56,7 @@ namespace RunningGroupsWebApp.Controllers
                     Title = raceVM.Title,
                     Description = raceVM.Description,
                     Image = result.Url.ToString(),
+                    AppUserId = raceVM.AppUserId,
                     Address = new AddressModel
                     {
                         Street = raceVM.Address.Street,

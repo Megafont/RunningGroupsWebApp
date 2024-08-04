@@ -17,16 +17,16 @@ namespace RunningGroupsWebApp.Repositories
 
         public async Task<List<ClubModel>> GetAllUserClubsAsync()
         {
-            var curUser = _HttpContextAccessor.HttpContext?.User;
-            var userClubs = _DbContext.Clubs.Where(r => r.AppUser.Id == curUser.ToString());
+            var curUser = _HttpContextAccessor.HttpContext?.User.GetUserId(); // GetUserId() is an extension method we made in ClaimPrincipalExtensions.cs.
+            var userClubs = _DbContext.Clubs.Where(r => r.AppUser.Id == curUser);
 
             return userClubs.ToList();
         }
 
         public async Task<List<RaceModel>> GetAllUserRacesAsync()
         {
-            var curUser = _HttpContextAccessor.HttpContext?.User;
-            var userRaces = _DbContext.Races.Where(r => r.AppUser.Id == curUser.ToString());
+            var curUser = _HttpContextAccessor.HttpContext?.User.GetUserId(); // GetUserId() is an extension method we made in ClaimPrincipalExtensions.cs.
+            var userRaces = _DbContext.Races.Where(r => r.AppUser.Id == curUser);
 
             return userRaces.ToList();
         }

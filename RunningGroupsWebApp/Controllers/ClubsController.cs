@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 using RunningGroupsWebApp.Data;
 using RunningGroupsWebApp.Interfaces;
 using RunningGroupsWebApp.Models;
-using RunningGroupsWebApp.Interfaces;
 using RunningGroupsWebApp.ViewModels;
 
 namespace RunningGroupsWebApp.Controllers
@@ -12,11 +12,13 @@ namespace RunningGroupsWebApp.Controllers
     {
         private readonly IClubsRepository _ClubsRepository;
         private readonly IPhotoService _PhotoService;
+        private readonly IHttpContextAccessor _HttpContextAccessor;
 
-        public ClubsController(IClubsRepository clubsRepository, IPhotoService photoService)
+        public ClubsController(IClubsRepository clubsRepository, IPhotoService photoService, IHttpContextAccessor httpContextAccessor)
         {
             _ClubsRepository = clubsRepository;
             _PhotoService = photoService;
+            _HttpContextAccessor = httpContextAccessor;
         }
 
         public async Task<IActionResult> Index()
@@ -34,7 +36,11 @@ namespace RunningGroupsWebApp.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            var curUserId = _HttpContextAccessor.HttpContext.User.GetUserId(); // GetUserId() is an extension method we made in ClaimPrincipalExtensions.cs.
+
+            var createClubViewModel = new CreateClubViewModel { AppUserId = curUserId };
+
+            return View(createClubViewModel);
         }
 
         [HttpPost]
@@ -49,6 +55,7 @@ namespace RunningGroupsWebApp.Controllers
                     Title = clubVM.Title,
                     Description = clubVM.Description,
                     Image = result.Url.ToString(),
+                    AppUserId = clubVM.AppUserId,
                     Address = new AddressModel
                     {
                         Street = clubVM.Address.Street,

@@ -10,6 +10,7 @@
 
 <!-- We added "enctype="multipart/form-data" here in video #10. It is necessary when you add the ability to upload images.-->
 <form method="post" asp-action="Create" enctype="multipart/form-data">
+    <input type="hidden" id="AppUserId" name="AppUserId" asp-for="AppUserId" />
     <div class="form-group">
         <label asp-for="Title">Title</label>
         <input asp-for="Title" class="form-control" placeholder="Enter title">
