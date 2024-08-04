@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RunGroupWebApp.Models
+using Microsoft.AspNetCore.Identity;
+
+
+namespace RunningGroupsWebApp.Models
 {
     public class AppUser : IdentityUser
     {

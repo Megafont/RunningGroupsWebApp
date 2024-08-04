@@ -2,13 +2,11 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-using RunGroupWebApp.Data;
-using RunGroupWebApp.Data.Enums;
-using RunGroupWebApp.Interfaces;
-using RunGroupWebApp.Models;
-using RunGroupWebApp.Repositories;
+using RunningGroupsWebApp.Data;
 using RunningGroupsWebApp.Helpers;
 using RunningGroupsWebApp.Interfaces;
+using RunningGroupsWebApp.Models;
+using RunningGroupsWebApp.Repositories;
 using RunningGroupsWebApp.Services;
 
 
@@ -18,6 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IClubsRepository, ClubsRepository>();
 builder.Services.AddScoped<IRacesRepository, RacesRepository>();
+builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
 builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -54,6 +53,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

@@ -1,5 +1,5 @@
-﻿using RunGroupWebApp.Data.Enums;
-using RunGroupWebApp.Models;
+﻿using RunningGroupsWebApp.Data.Enums;
+using RunningGroupsWebApp.Models;
 
 namespace RunningGroupsWebApp.ViewModels
 {

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace RunGroupWebApp.Migrations
+namespace RunningGroupsWebApp.Migrations
 {
     /// <inheritdoc />
     public partial class NullAddressFix : Migration

@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-using RunGroupWebApp.Data.Enums;
+using RunningGroupsWebApp.Data.Enums;
 
 
-namespace RunGroupWebApp.Models
+namespace RunningGroupsWebApp.Models
 {
     public class ClubModel
     {

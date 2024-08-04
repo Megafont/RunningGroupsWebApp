@@ -3,11 +3,11 @@ using System.Net;
 
 using Microsoft.AspNetCore.Identity;
 
-using RunGroupWebApp.Data.Enums;
-using RunGroupWebApp.Models;
-using RunningGroupsWebApp.Data;
+using RunningGroupsWebApp.Data.Enums;
+using RunningGroupsWebApp.Models;
 
-namespace RunGroupWebApp.Data
+
+namespace RunningGroupsWebApp.Data
 {
     public class Seed
     {

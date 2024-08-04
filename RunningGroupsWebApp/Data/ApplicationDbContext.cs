@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using RunGroupWebApp.Models;
 
-namespace RunGroupWebApp.Data
+using RunningGroupsWebApp.Models;
+
+namespace RunningGroupsWebApp.Data
 {
     public class ApplicationDbContext : IdentityDbContext<AppUser>
     {

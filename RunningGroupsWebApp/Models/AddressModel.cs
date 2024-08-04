@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RunGroupWebApp.Models
+namespace RunningGroupsWebApp.Models
 {
     public class AddressModel
     {

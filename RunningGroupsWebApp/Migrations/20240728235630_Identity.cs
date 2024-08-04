@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace RunGroupWebApp.Migrations
+namespace RunningGroupsWebApp.Migrations
 {
     /// <inheritdoc />
     public partial class Identity : Migration

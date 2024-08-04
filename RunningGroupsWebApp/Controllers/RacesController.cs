@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using RunGroupWebApp.Data;
-using RunGroupWebApp.Interfaces;
-using RunGroupWebApp.Models;
-using RunGroupWebApp.Repositories;
+using RunningGroupsWebApp.Data;
+using RunningGroupsWebApp.Interfaces;
+using RunningGroupsWebApp.Models;
+using RunningGroupsWebApp.Repositories;
 using RunningGroupsWebApp.Interfaces;
 using RunningGroupsWebApp.ViewModels;
 
-namespace RunGroupWebApp.Controllers
+namespace RunningGroupsWebApp.Controllers
 {
     public class RacesController : Controller
     {

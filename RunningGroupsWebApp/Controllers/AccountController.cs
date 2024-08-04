@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
-using RunGroupWebApp.Data;
-using RunGroupWebApp.Models;
+using RunningGroupsWebApp.Data;
+using RunningGroupsWebApp.Models;
 using RunningGroupsWebApp.Data;
 using RunningGroupsWebApp.ViewModels;
 

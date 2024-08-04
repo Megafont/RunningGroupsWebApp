@@ -1,4 +1,4 @@
-namespace RunGroupWebApp.Models
+namespace RunningGroupsWebApp.Models
 {
     public class ErrorViewModel
     {

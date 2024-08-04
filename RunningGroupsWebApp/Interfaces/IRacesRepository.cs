@@ -1,6 +1,6 @@
-﻿using RunGroupWebApp.Models;
+﻿using RunningGroupsWebApp.Models;
 
-namespace RunGroupWebApp.Interfaces
+namespace RunningGroupsWebApp.Interfaces
 {
     public interface IRacesRepository
     {
