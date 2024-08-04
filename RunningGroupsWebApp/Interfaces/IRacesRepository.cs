@@ -7,7 +7,7 @@ namespace RunningGroupsWebApp.Interfaces
         Task<IEnumerable<RaceModel>> GetAllAsync();
 
         Task<RaceModel> GetByIdAsync(int id);
-        Task<RaceModel> GetByIdAsyncNoTracking(int id);
+        Task<RaceModel> GetByIdNoTrackingAsync(int id);
         Task<IEnumerable<RaceModel>> GetAllByCityAsync(string city);
 
         // CRUD commands

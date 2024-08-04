@@ -1,6 +1,7 @@
 ﻿using RunningGroupsWebApp.Data;
 using RunningGroupsWebApp.Models;
 using RunningGroupsWebApp.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace RunningGroupsWebApp.Repositories
 {
@@ -29,6 +30,28 @@ namespace RunningGroupsWebApp.Repositories
             var userRaces = _DbContext.Races.Where(r => r.AppUser.Id == curUser);
 
             return userRaces.ToList();
+        }
+
+        public async Task<AppUser> GetUserByIdAsync(string id)
+        {
+            return await _DbContext.Users.FindAsync(id);
+        }
+
+        public async Task<AppUser> GetUserByIdNoTrackingAsync(string id)
+        {
+            return await _DbContext.Users.Where(u => u.Id == id).AsNoTracking().FirstOrDefaultAsync();
+        }
+
+        public bool Save()
+        {
+            var saved = _DbContext.SaveChanges();
+            return saved > 0 ? true: false;
+        }
+
+        public bool Update(AppUser user)
+        {
+            _DbContext.Users.Update(user);
+            return Save();
         }
     }
 }

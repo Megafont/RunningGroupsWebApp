@@ -102,7 +102,7 @@ namespace RunningGroupsWebApp.Controllers
                 return View("Edit", raceVM);
             }
 
-            var userRace = await _RacesRepository.GetByIdAsyncNoTracking(id);
+            var userRace = await _RacesRepository.GetByIdNoTrackingAsync(id);
 
             if (userRace != null)
             {

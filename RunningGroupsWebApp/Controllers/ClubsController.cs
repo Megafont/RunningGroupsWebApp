@@ -101,7 +101,7 @@ namespace RunningGroupsWebApp.Controllers
                 return View("Edit", clubVM);
             }
 
-            var userClub = await _ClubsRepository.GetByIdAsyncNoTracking(id);
+            var userClub = await _ClubsRepository.GetByIdNoTrackingAsync(id);
 
             if (userClub != null)
             {

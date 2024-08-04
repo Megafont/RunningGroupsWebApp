@@ -38,7 +38,7 @@ namespace RunningGroupsWebApp.Repositories
             return await _DbContext.Races.Include(i => i.Address).FirstOrDefaultAsync(i => i.Id == id);
         }
 
-        public async Task<RaceModel> GetByIdAsyncNoTracking(int id)
+        public async Task<RaceModel> GetByIdNoTrackingAsync(int id)
         {
             // The Include() call tells it to also get the address data when it fetches the requested club from the database table.
             // This is because the Address is in another table, and it will not look it up if you don't use Include().
