@@ -125,6 +125,7 @@ namespace RunningGroupsWebApp.Controllers
                     Id = id,
                     Title = raceVM.Title,
                     Description = raceVM.Description,
+                    AppUserId = userRace.AppUserId,
                     AddressId = userRace.AddressId,
                     Address = new AddressModel
                     {

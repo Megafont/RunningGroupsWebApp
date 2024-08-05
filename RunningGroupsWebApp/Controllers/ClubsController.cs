@@ -60,8 +60,9 @@ namespace RunningGroupsWebApp.Controllers
                     {
                         Street = clubVM.Address.Street,
                         City = clubVM.Address.City,
-                        State = clubVM.Address.State
+                        State = clubVM.Address.State,
                     },
+                    ClubCategory = clubVM.ClubCategory,
                 };
 
                 _ClubsRepository.Add(club);
@@ -82,7 +83,7 @@ namespace RunningGroupsWebApp.Controllers
             var clubVM = new EditClubViewModel
             {
                 Title = club.Title,
-                Description = club.Description,
+                Description = club.Description,               
                 AddressId = club.AddressId,
                 Address = club.Address,
                 ClubCategory = club.ClubCategory,
@@ -124,6 +125,7 @@ namespace RunningGroupsWebApp.Controllers
                     Id = id,
                     Title = clubVM.Title,
                     Description = clubVM.Description,
+                    AppUserId = userClub.AppUserId,
                     AddressId = userClub.AddressId,
                     Address = new AddressModel
                     {
